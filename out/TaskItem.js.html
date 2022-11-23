@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: TaskItem.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: TaskItem.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useState, useRef } from "react";
+
+import "./_TaskItem.scss";
+import Button from "./UI/Button";
+import AttachIcon from "../svg/AttachIcon";
+import EditIcon from "../svg/EditIcon";
+import DeleteIcon from "../svg/DeleteIcon";
+import InfoIcon from "../svg/InfoIcon";
+import dayjs from "dayjs";
+
+const TaskItem = (props) => {
+  const [taskCompleted, setTaskCompleted] = useState(props.status);
+  const [attachmentIsShow, setAttachmentIsShown] = useState(false);
+  const [descriptionIsShow, setDescriptiontIsShown] = useState(false);
+  const [editTaskIsShow, setEditTaskIsShow] = useState(false);
+
+  const titleRef = useRef();
+  const descriptionRef = useRef();
+  const deadlineRef = useRef();
+
+  /**
+   * Смена статуса задачи и обновление данной информации на сервере
+   * @param {object} event стандартное событие при onChange
+   */
+  const changeTaskStatusHandler = (event) => {
+    setTaskCompleted(event.target.checked);
+
+    fetch(
+      `https://todo-list-fwu-default-rtdb.firebaseio.com/tasksList/${event.target.id}/taskStatus.json`,
+      {
+        method: "PUT",
+        body: JSON.stringify(event.target.checked),
+      }
+    );
+  };
+
+  const showAttachmentToggle = () => {
+    setAttachmentIsShown(!attachmentIsShow);
+  };
+  const showDescriptionToggle = () => {
+    setDescriptiontIsShown(!descriptionIsShow);
+  };
+  const showEditTaskToggle = () => {
+    setEditTaskIsShow(!editTaskIsShow);
+  };
+
+  const deleteTaskHandler = () => {
+    props.onDelete(props.id);
+  };
+/**
+ * Формарование объекта с обновленными полями задачи и дальнейшая передача его родителю для обновления на сервере
+ * @param {object} event стандартное событие при Submit
+ */
+  const updateTaskHandler = (event) => {
+    event.preventDefault();
+
+    const updatedTaskData = {
+      id: props.id,
+      taskTitle: titleRef.current.value,
+      taskDescription: descriptionRef.current.value,
+      taskDeadline: deadlineRef.current.value,
+    };
+
+    props.onUpdateTask(updatedTaskData);
+    setEditTaskIsShow(!editTaskIsShow);
+  };
+/** Форма для корректировки задачи */
+  const editTask = (
+    &lt;form className="new-task-form" onSubmit={updateTaskHandler}>
+      &lt;div className="new-task-form__line">
+        &lt;label htmlFor="taskTitle">Заголовок задачи&lt;/label>
+        &lt;input ref={titleRef} type="text" id="taskTitle" defaultValue={props.title} />
+      &lt;/div>
+
+      &lt;div className="new-task-form__line">
+        &lt;label htmlFor="taskText">Описание задачи&lt;/label>
+        &lt;textarea
+          ref={descriptionRef}
+          rows="5"
+          cols="40"
+          name="text"
+          id="taskText"
+          defaultValue={props.description}
+        />
+      &lt;/div>
+
+      &lt;div className="new-task-form__line">
+        &lt;label htmlFor="taskDate">Дата завершения задачи&lt;/label>
+        &lt;input ref={deadlineRef} type="date" id="taskDate" defaultValue={props.deadline} />
+      &lt;/div>
+
+      &lt;div className="new-task-form__btns-area">
+        &lt;Button className="new-task-btn_darkblue">Обновить задачу&lt;/Button>
+      &lt;/div>
+    &lt;/form>
+  );
+
+  return (
+    &lt;li className="task">
+      &lt;div className="task__title">
+        &lt;div className="title-text">
+          &lt;div>
+            &lt;input
+              type="checkbox"
+              className="task__status"
+              id={props.id}
+              onChange={changeTaskStatusHandler}
+              checked={taskCompleted}
+            />
+          &lt;/div>
+          &lt;div>
+            &lt;label className="task__title-name" htmlFor={props.id}>
+              {props.title}
+            &lt;/label>
+          &lt;/div>
+        &lt;/div>
+        &lt;div className="title-icons">
+          &lt;span className="task__edit-icon tooltip">
+            &lt;EditIcon onClick={showEditTaskToggle} />
+            &lt;span className="tooltiptext">Редактировать задачу&lt;/span>
+          &lt;/span>
+          &lt;span className="task__delete-icon tooltip">
+            &lt;DeleteIcon onClick={deleteTaskHandler} />
+            &lt;span className="tooltiptext">Удалить задачу&lt;/span>
+          &lt;/span>
+          {props.files &amp;&amp; (
+            &lt;span className="task__attach-icon tooltip">
+              &lt;AttachIcon onClick={showAttachmentToggle} />
+              &lt;span className="tooltiptext">Приерепленные файлы&lt;/span>
+            &lt;/span>
+          )}
+          {props.description !== "" &amp;&amp; (
+            &lt;span className="task__info-icon tooltip">
+              &lt;InfoIcon onClick={showDescriptionToggle} />
+              &lt;span className="tooltiptext">Показать описание&lt;/span>
+            &lt;/span>
+          )}
+        &lt;/div>
+      &lt;/div>
+      {props.description !== "" &amp;&amp; descriptionIsShow &amp;&amp; (
+        &lt;div className="task__description">
+          &lt;p>{props.description}&lt;/p>
+        &lt;/div>
+      )}
+      {props.files &amp;&amp; attachmentIsShow &amp;&amp; (
+        &lt;ol className="task__attachments">
+          {props.files.map((file) => (
+            &lt;li key={Math.random()}>
+              &lt;a href={file} target="blank">
+                Файл
+              &lt;/a>
+            &lt;/li>
+          ))}
+        &lt;/ol>
+      )}
+      &lt;div className="task__deadline">
+        {props.deadline !== "" &amp;&amp; (
+          &lt;p>Дата завершения: {dayjs(props.deadline).format("DD.MM.YYYY")}&lt;/p>
+        )}
+        {!taskCompleted &amp;&amp; dayjs(props.deadline) &lt; dayjs() &amp;&amp; (
+          &lt;p>( просрочено! )&lt;/p>
+        )}
+        {taskCompleted &amp;&amp; &lt;p>( выполнено )&lt;/p>}
+        {editTaskIsShow &amp;&amp; editTask}
+      &lt;/div>
+    &lt;/li>
+  );
+};
+
+export default TaskItem;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Wed Nov 23 2022 19:16:31 GMT+0300 (Москва, стандартное время)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

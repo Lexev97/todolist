@@ -1,0 +1,84 @@
+@import "../App.scss";
+
+.task {
+    list-style: none;
+
+  &__title {
+    @include flex(row, flex-start, center);
+    padding-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  &__status {
+    width: 4rem;
+    text-align: center;
+    line-height: 0;
+  }
+
+  &__title-name {
+    cursor: pointer;
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+
+  &__attach-icon,
+  &__edit-icon,
+  &__delete-icon,
+  &__info-icon {
+
+    svg {
+      cursor: pointer;
+      vertical-align: middle;
+      height: 2rem;
+    }
+  }
+
+  &__description {
+    padding: 0.5rem 2rem 0.5rem 4rem;
+  }
+
+  &__attachments {
+    list-style: normal;
+    padding: 0.5rem 2rem 0.5rem 4rem;
+  }
+
+  &__deadline {
+    padding: 0.5rem 2rem 2rem 4rem;
+    border-bottom: 0.1rem dashed $darkblue;
+  }
+}
+
+.title-text {
+  @include flex(row, flex-start, center);
+  flex-shrink: 1;
+
+}
+.title-icons {
+  @include flex(row, flex-start, center);
+  gap: 1rem;
+  padding: 0.5rem 0 0.5rem 4rem;
+  flex-shrink: 1;
+  flex-basis: 11rem;
+}
+
+.tooltip {
+  position: relative;
+
+  .tooltiptext {
+    visibility: hidden;
+    background-color: $lightblue;
+    color: $darkblue;
+    text-align: center;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+
+    position: absolute;
+    z-index: 1;
+    bottom: 120%;
+    left: 50%;
+  }
+
+  &:hover .tooltiptext {
+    visibility: visible;
+  }
+}

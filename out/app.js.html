@@ -1,4 +1,32 @@
-import { useState, useRef, useEffect } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useState, useRef, useEffect } from "react";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {
   getDatabase,
@@ -129,7 +157,7 @@ function App() {
  * @param {object} event данные о прикрепленных файлах
  */
   const filesListHandler = (event) => {
-    for (let i = 0; i < event.target.files.length; i++) {
+    for (let i = 0; i &lt; event.target.files.length; i++) {
       const newFile = event.target.files[i];
       newFile["id"] = Math.random();
       setUploadingFiles((prevState) => [...prevState, newFile]);
@@ -159,64 +187,64 @@ function App() {
   };
 /** Форма для добавления новой задачи */
   const taskForm = (
-    <form className="new-task-form" onSubmit={addTaskHandler}>
-      <div className="new-task-form__line">
-        <label htmlFor="taskTitle">Заголовок задачи</label>
-        <input ref={titleRef} type="text" id="taskTitle" />
-      </div>
+    &lt;form className="new-task-form" onSubmit={addTaskHandler}>
+      &lt;div className="new-task-form__line">
+        &lt;label htmlFor="taskTitle">Заголовок задачи&lt;/label>
+        &lt;input ref={titleRef} type="text" id="taskTitle" />
+      &lt;/div>
 
-      <div className="new-task-form__line">
-        <label htmlFor="taskText">Описание задачи</label>
-        <textarea
+      &lt;div className="new-task-form__line">
+        &lt;label htmlFor="taskText">Описание задачи&lt;/label>
+        &lt;textarea
           ref={descriptionRef}
           rows="5"
           cols="40"
           name="text"
           id="taskText"
-        ></textarea>
-      </div>
+        >&lt;/textarea>
+      &lt;/div>
 
-      <div className="new-task-form__line">
-        <label htmlFor="taskDate">Дата завершения задачи</label>
-        <input ref={deadlineRef} type="date" id="taskDate" />
-      </div>
+      &lt;div className="new-task-form__line">
+        &lt;label htmlFor="taskDate">Дата завершения задачи&lt;/label>
+        &lt;input ref={deadlineRef} type="date" id="taskDate" />
+      &lt;/div>
 
-      <div className="new-task-form__line">
-        <label htmlFor="taskFile">Приерепить файл</label>
-        <input type="file" id="taskFile" onChange={filesListHandler} multiple />
-        <button type="button" onClick={uploadFilesHandler}>
+      &lt;div className="new-task-form__line">
+        &lt;label htmlFor="taskFile">Приерепить файл&lt;/label>
+        &lt;input type="file" id="taskFile" onChange={filesListHandler} multiple />
+        &lt;button type="button" onClick={uploadFilesHandler}>
           Прикрепить
-        </button>
-      </div>
-      <div className="new-task-form__btns-area">
-        <Button className="new-task-btn_red">Добавить задачу</Button>
-        <Button
+        &lt;/button>
+      &lt;/div>
+      &lt;div className="new-task-form__btns-area">
+        &lt;Button className="new-task-btn_red">Добавить задачу&lt;/Button>
+        &lt;Button
           type="button"
           className="new-task-btn_darkblue"
           onClick={closeTaskFormHandler}
         >
           Отменить
-        </Button>
-      </div>
-    </form>
+        &lt;/Button>
+      &lt;/div>
+    &lt;/form>
   );
 
   return (
-    <section className="todo-wrapper">
-      <header className="todo-header">
-        <h1 className="todo-header__title">ToDo-Лист</h1>
+    &lt;section className="todo-wrapper">
+      &lt;header className="todo-header">
+        &lt;h1 className="todo-header__title">ToDo-Лист&lt;/h1>
 
-        {!taskFormIsShown && (
-          <Button className="new-task-btn_red" onClick={showTaskFormHandler}>
+        {!taskFormIsShown &amp;&amp; (
+          &lt;Button className="new-task-btn_red" onClick={showTaskFormHandler}>
             Новая задача
-          </Button>
+          &lt;/Button>
         )}
-        {taskFormIsShown && taskForm}
-      </header>
+        {taskFormIsShown &amp;&amp; taskForm}
+      &lt;/header>
 
-      <ul>
+      &lt;ul>
         {fetchedTasks.map((task) => (
-          <TaskItem
+          &lt;TaskItem
             key={task.id}
             id={task.id}
             title={task.taskTitle}
@@ -228,9 +256,32 @@ function App() {
             onUpdateTask={updateTaskHandler}
           />
         ))}
-      </ul>
-    </section>
+      &lt;/ul>
+    &lt;/section>
   );
 }
 
 export default App;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Wed Nov 23 2022 19:16:12 GMT+0300 (Москва, стандартное время)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+@mixin flex($direction, $justify, $align) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+h1 {
+  font-size: 4.2rem;
+}
+h2 {
+  font-size: 2.4rem;
+}
+h3 {
+  font-size: 1.8rem;
+}
+p {
+  font-size: 1.4rem;
+}
+
+li {
+  font-size: 1.4rem;
+}
+
+$red: #e63946;
+$yelblue: #f1faee;
+$lightblue: #a8dadc;
+$blue: #457b9d;
+$darkblue: #1d3557;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+
+  overflow-x: hidden;
+  margin-right: calc(-1 * (100vw - 100%));
+}
+
+body {
+  font-family: "Calibri", Arial, Helvetica, sans-serif;
+  background-color: $yelblue;
+}
+
+.todo-wrapper {
+  width: 60%;
+  margin: auto;
+}
+
+.todo-header {
+  padding: 2rem 2rem 2rem 4rem;
+
+  &__title {
+    color: $blue;
+    padding-bottom: 2rem;
+  }
+}
+
+.new-task-form {
+  @include flex(column, center, flex-start);
+  padding: 2rem 0;
+  gap: 1rem;
+
+  &__line {
+    @include flex(column, center, flex-start);
+    gap: 0.5rem;
+  }
+
+  &__btns-area {
+    @include flex(row, flex-start, center);
+    gap: 2rem;
+    padding-top: 1rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .todo-wrapper {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 769px) {
+  .todo-wrapper {
+    width: 85%;
+  }
+}

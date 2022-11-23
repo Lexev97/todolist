@@ -1,0 +1,37 @@
+@import '../../App.scss';
+
+.new-task-btn {
+    cursor: pointer;  
+    border: none;
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    color: $yelblue;
+    box-shadow: 0rem 0.2rem 0.5rem grey;
+  
+    &_red {
+      background-color: $red;
+  
+      &:hover {
+        background-color: rgb(196, 0, 0);
+      }
+    
+      &:active {
+        background-color: rgb(164, 0, 0);
+        box-shadow: none;
+      }
+    }
+  
+    &_darkblue {
+      background-color: $darkblue;
+  
+      &:hover {
+        background-color: rgb(0, 14, 172);
+      }
+    
+      &:active {
+        background-color: rgb(0, 26, 130);
+        box-shadow: none;
+      }
+    }
+    
+  }
